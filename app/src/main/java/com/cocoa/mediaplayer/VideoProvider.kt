@@ -8,10 +8,8 @@ import android.provider.MediaStore
 import android.util.Log
 import androidx.annotation.RequiresApi
 import com.cocoa.mediaplayer.api.MovieDetails
-import com.cocoa.mediaplayer.api.MovieDetailsRepository
 import com.cocoa.mediaplayer.api.TheMovieDBClient
 import com.cocoa.mediaplayer.api.TheMovieDBInterface
-import io.reactivex.disposables.CompositeDisposable
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -19,10 +17,9 @@ import retrofit2.Response
 
 object VideoProvider : Activity() {
 
+    const val API_KEY = "a6ea5bd224b1d6ca252e6209cca8b9d7"
     var list: List<MovieDetails> ?=null
     private var count: Long = 0
-
-    private lateinit var movieRepository : MovieDetailsRepository
 
     @RequiresApi(Build.VERSION_CODES.Q)
     fun setupMovies(activity: Activity): List<MovieDetails>? {
@@ -41,17 +38,8 @@ object VideoProvider : Activity() {
         val orderBy = MediaStore.Video.Media.TITLE
         val rs: Cursor? = activity.applicationContext.getContentResolver().query(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, proj, null, null, orderBy)
 
-        val compositeDisposable = CompositeDisposable()
-
-
-
-//        val apiService : TheMovieDBInterface = TheMovieDBClient.getClient()
-//        movieRepository = MovieDetailsRepository(apiService)
-//        var cccc = movieRepository.fetchSingleMovieDetails( compositeDisposable, 500)
-
-
         val request = TheMovieDBClient.ServiceBuilder.buildService(TheMovieDBInterface::class.java)
-        val call = request.getMovies("a6ea5bd224b1d6ca252e6209cca8b9d7")
+        val call = request.getMovieDetails(650, API_KEY)
 
         Log.d("VIDEO","MAAAAAAAAUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU")
 
