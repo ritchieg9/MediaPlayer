@@ -2,12 +2,18 @@ package com.corochann.helloandroidtvfromscrach
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.leanback.app.VerticalGridFragment
 import androidx.leanback.widget.ArrayObjectAdapter
 import androidx.leanback.widget.VerticalGridPresenter
+import com.cocoa.mediaplayer.VideoProvider
+import com.cocoa.mediaplayer.api.MovieDetails
+import com.cocoa.mediaplayer.api.MovieDetailsRepository
+import com.cocoa.mediaplayer.api.TheMovieDBClient
 
 
 class MainFragment : VerticalGridFragment() {
@@ -16,6 +22,7 @@ class MainFragment : VerticalGridFragment() {
     private val NUM_COLUMNS = 5
     private var mAdapter: ArrayObjectAdapter? = null
 
+    @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.d("VIDEO", "onCreate VerticalGridFragment")
         setTitle("Movies");
@@ -30,6 +37,7 @@ class MainFragment : VerticalGridFragment() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.Q)
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -41,10 +49,12 @@ class MainFragment : VerticalGridFragment() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.Q)
     private fun setupFragment() {
 
 //        TODO Replace list with movie list
-//        val list: List<Movie>? = VideoProvider.setupMovies(activity)
+        VideoProvider.setupMovies(activity)
+//        val list: List<MovieDetails>? = VideoProvider.setupMovies(activity)
         val list: List<String> ?= null
         val gridPresenter = VerticalGridPresenter()
 
