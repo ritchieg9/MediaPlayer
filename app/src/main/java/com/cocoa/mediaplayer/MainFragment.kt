@@ -11,9 +11,6 @@ import androidx.leanback.app.VerticalGridFragment
 import androidx.leanback.widget.ArrayObjectAdapter
 import androidx.leanback.widget.VerticalGridPresenter
 import com.cocoa.mediaplayer.VideoProvider
-import com.cocoa.mediaplayer.api.MovieDetails
-import com.cocoa.mediaplayer.api.MovieDetailsRepository
-import com.cocoa.mediaplayer.api.TheMovieDBClient
 
 
 class MainFragment : VerticalGridFragment() {

@@ -38,8 +38,9 @@ object VideoProvider : Activity() {
         val orderBy = MediaStore.Video.Media.TITLE
         val rs: Cursor? = activity.applicationContext.getContentResolver().query(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, proj, null, null, orderBy)
 
+        // MAKE CALL WITH ID
         val request = TheMovieDBClient.ServiceBuilder.buildService(TheMovieDBInterface::class.java)
-        val call = request.getMovieDetails(650, API_KEY)
+        val call = request.getMovieDetails(800, API_KEY)
 
         Log.d("VIDEO","MAAAAAAAAUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU")
 
@@ -54,6 +55,7 @@ object VideoProvider : Activity() {
                 Log.d("VIDEO","ALGO MUY MALO PASO")
             }
         })
+        // MEND OF CALL
 
 
         if (rs != null) {
