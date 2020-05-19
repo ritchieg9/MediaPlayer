@@ -132,7 +132,6 @@ object VideoProvider : Activity() {
                                 cardImageUrl.add(POSTER_BASE_URL+response.body()!!.results[0].poster_path.toString())
                                 description.add(response.body()!!.results[0].overview.toString())
 
-                                mAdapter = ArrayObjectAdapter(CardPresenter())
 
                                 var movie = MovieDetails()
                                 movie.id = VideoProvider.count++
@@ -143,7 +142,17 @@ object VideoProvider : Activity() {
                                 movie.videoUrl = url
                                 movie.studio = director
 
-                                mAdapter!!.add(movie)
+                                list = title.indices.map {
+                                    buildMovieInfo(
+                                        title[it],
+                                        description[it],
+                                        movieDirector[it],
+                                        videoUrl[it],
+                                        cardImageUrl[it],
+                                        bgImageUrl[it]
+                                    )
+                                }
+
                             }
                         }
                         override fun onFailure(call: Call<MovieResults>, t: Throwable) {
@@ -151,7 +160,7 @@ object VideoProvider : Activity() {
                         }
                     })
 
-                    if (count == 5){
+                    if (count == 10){
                         break
                     }
                 }
@@ -160,16 +169,16 @@ object VideoProvider : Activity() {
             Log.d("VIDEO","COCOOOOOOOOOOOOOOOOOOOOOAAAAAAAAAAAAAa ")
             rs.close()
 
-            list = title.indices.map {
-                buildMovieInfo(
-                    title[it],
-                    description[it],
-                    movieDirector[it],
-                    videoUrl[it],
-                    cardImageUrl[it],
-                    bgImageUrl[it]
-                )
-            }
+//            list = title.indices.map {
+//                buildMovieInfo(
+//                    title[it],
+//                    description[it],
+//                    movieDirector[it],
+//                    videoUrl[it],
+//                    cardImageUrl[it],
+//                    bgImageUrl[it]
+//                )
+//            }
         }
         return list
     }
