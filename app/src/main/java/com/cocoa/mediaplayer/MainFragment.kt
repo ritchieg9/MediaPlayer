@@ -10,7 +10,9 @@ import androidx.core.app.ActivityCompat
 import androidx.leanback.app.VerticalGridFragment
 import androidx.leanback.widget.ArrayObjectAdapter
 import androidx.leanback.widget.VerticalGridPresenter
+import com.cocoa.mediaplayer.CardPresenter
 import com.cocoa.mediaplayer.VideoProvider
+import com.cocoa.mediaplayer.api.MovieDetails
 
 
 class MainFragment : VerticalGridFragment() {
@@ -47,17 +49,17 @@ class MainFragment : VerticalGridFragment() {
     }
 
     @RequiresApi(Build.VERSION_CODES.Q)
-    private fun setupFragment() {
+    public fun setupFragment() {
 
 //        TODO Replace list with movie list
-        VideoProvider.setupMovies(activity)
-//        val list: List<MovieDetails>? = VideoProvider.setupMovies(activity)
-        val list: List<String> ?= null
-        val gridPresenter = VerticalGridPresenter()
+//        VideoProvider.setupMovies(activity)
 
+        mAdapter = ArrayObjectAdapter(CardPresenter())
+        val list: List<MovieDetails>? = VideoProvider.setupMovies(activity)
+//        val list: List<String> ?= null
+        val gridPresenter = VerticalGridPresenter()
         gridPresenter.setNumberOfColumns(NUM_COLUMNS)
         setGridPresenter(gridPresenter)
-//        mAdapter = ArrayObjectAdapter(CardPresenter())
 
         if (list != null) {
             for (movie in list) {
