@@ -121,7 +121,7 @@ object VideoProvider : Activity() {
 
                     call.enqueue(object : Callback<MovieResults> {
                         override fun onResponse(call: Call<MovieResults>, response: Response<MovieResults>) {
-                            if (response.isSuccessful){
+                            if (response.isSuccessful && response.body().toString().length > 0){
 
                                 Log.d("VIDEO","MAAAAAAAAUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU "+count)
                                 Log.d("VIDEO",response.body().toString())
@@ -160,7 +160,7 @@ object VideoProvider : Activity() {
                         }
                     })
 
-                    if (count == 10){
+                    if (count == 20){
                         break
                     }
                 }

@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.SystemClock
 import android.util.Log
+import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.leanback.app.VerticalGridFragment
@@ -15,6 +16,7 @@ import androidx.leanback.widget.ArrayObjectAdapter
 import androidx.leanback.widget.VerticalGridPresenter
 import com.cocoa.mediaplayer.api.MovieDetails
 import com.example.videostudio.R
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainFragment : VerticalGridFragment() {
@@ -22,7 +24,6 @@ class MainFragment : VerticalGridFragment() {
     private val TAG = VerticalGridFragment::class.java.simpleName
     private val NUM_COLUMNS = 5
     private var mAdapter: ArrayObjectAdapter? = null
-    private val mSinnerFragment = SpinnerFragment()
 
 
     @RequiresApi(Build.VERSION_CODES.Q)
@@ -45,21 +46,17 @@ class MainFragment : VerticalGridFragment() {
     private inner class ShowSpinnerTask :
         AsyncTask<Void?, Void?, Void?>() {
 
-
         @RequiresApi(Build.VERSION_CODES.Q)
         @SuppressLint("ResourceType")
         override fun onPreExecute() {
             VideoProvider.setupMovies(activity)
-//            activity.fragmentManager.beginTransaction().add(R.id.main_fragment, mSinnerFragment).commit()
         }
 
         @RequiresApi(Build.VERSION_CODES.Q)
         override fun onPostExecute(aVoid: Void?) {
-
             Log.d("VIDEO", "NIGGAR D")
+            progressBar.visibility = View.GONE
             setUpDone()
-//            fragmentManager.beginTransaction().remove(mSinnerFragment).commit()
-//            setAdapter(mAdapter);
         }
 
         @RequiresApi(Build.VERSION_CODES.Q)
@@ -80,34 +77,17 @@ class MainFragment : VerticalGridFragment() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if(requestCode === 505 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
             setupFragment()
+            ShowSpinnerTask().execute()
         }
     }
 
     @RequiresApi(Build.VERSION_CODES.Q)
     public fun setupFragment() {
-
-        Log.d("VIDEO","FUCKER")
-
-//        TODO Replace list with movie list
-//        VideoProvider.setupMovies(activity)
-
         mAdapter = ArrayObjectAdapter(CardPresenter())
-//        val list: List<MovieDetails>? = VideoProvider.setupMovies(activity)
-//        val list: List<String> ?= null
         val gridPresenter = VerticalGridPresenter()
         gridPresenter.setNumberOfColumns(NUM_COLUMNS)
         setGridPresenter(gridPresenter)
-
-//        if (list != null) {
-//            for (movie in list) {
-//                mAdapter!!.add(movie)
-//            }
-//        }
-
         adapter = mAdapter
-
-//        ShowSpinnerTask().execute()
-
     }
 
     @RequiresApi(Build.VERSION_CODES.Q)
@@ -120,7 +100,6 @@ class MainFragment : VerticalGridFragment() {
                 mAdapter!!.add(movie)
             }
         }
-
     }
 
 }
